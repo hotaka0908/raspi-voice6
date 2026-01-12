@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Credentials
+credentials.json
+token.json
+*.env
+.env
+
+# Temp files
+*.tmp
+/tmp/
+
+# macOS
+.DS_Store
