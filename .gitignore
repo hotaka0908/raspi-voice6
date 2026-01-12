@@ -21,6 +21,7 @@ logs/
 # Credentials
 credentials.json
 token.json
+calendar_token.json
 *.env
 .env
 

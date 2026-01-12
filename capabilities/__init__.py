@@ -22,6 +22,8 @@ from .memory import (
     start_lifelog_thread, stop_lifelog_thread,
     set_firebase_messenger, set_play_audio_callback
 )
+from .search import SEARCH_CAPABILITIES
+from .calendar import CALENDAR_CAPABILITIES, init_calendar
 
 __all__ = [
     'Capability',
@@ -45,4 +47,7 @@ __all__ = [
     'stop_lifelog_thread',
     'set_firebase_messenger',
     'set_play_audio_callback',
+    'SEARCH_CAPABILITIES',
+    'CALENDAR_CAPABILITIES',
+    'init_calendar',
 ]

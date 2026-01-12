@@ -12,6 +12,8 @@ from .vision import VISION_CAPABILITIES
 from .communication import COMMUNICATION_CAPABILITIES
 from .schedule import SCHEDULE_CAPABILITIES
 from .memory import MEMORY_CAPABILITIES
+from .search import SEARCH_CAPABILITIES
+from .calendar import CALENDAR_CAPABILITIES
 
 
 class CapabilityExecutor:
@@ -27,7 +29,9 @@ class CapabilityExecutor:
             VISION_CAPABILITIES +
             COMMUNICATION_CAPABILITIES +
             SCHEDULE_CAPABILITIES +
-            MEMORY_CAPABILITIES
+            MEMORY_CAPABILITIES +
+            SEARCH_CAPABILITIES +
+            CALENDAR_CAPABILITIES
         )
         for cap in all_capabilities:
             self._capabilities[cap.name] = cap

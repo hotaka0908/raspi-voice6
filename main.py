@@ -31,6 +31,7 @@ from core import (
 from capabilities import (
     init_gmail,
     init_firebase,
+    init_calendar,
     get_firebase_messenger,
     load_alarms,
     start_alarm_thread,
@@ -440,6 +441,10 @@ def main():
     # Gmail初期化
     gmail_ok = init_gmail()
     print(f"Gmail: {'有効' if gmail_ok else '無効'}")
+
+    # カレンダー初期化
+    calendar_ok = init_calendar()
+    print(f"カレンダー: {'有効' if calendar_ok else '無効'}")
 
     # Firebase初期化
     firebase_ok = init_firebase(on_voice_message_received)
