@@ -173,10 +173,10 @@ def transcribe_audio_with_gemini(wav_data: bytes) -> Optional[str]:
     try:
         client = genai.Client(api_key=Config.get_api_key())
         response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-2.5-flash-preview-05-20",
             contents=[
                 types.Part.from_text(
-                    text="この音声の内容を正確に文字起こししてください。話された言葉をそのまま書き出してください。余計な説明は不要です。"
+                    text="日本語の音声です。話された内容をそのまま正確に文字起こししてください。句読点を適切に入れてください。余計な説明や補足は不要です。"
                 ),
                 types.Part.from_bytes(data=wav_data, mime_type="audio/wav")
             ]
@@ -197,11 +197,14 @@ def record_voice_message() -> Optional[io.BytesIO]:
     if not audio_handler:
         return None
 
+    # 音声メッセージ用のサンプルレート（スマホ互換性のため24kHz）
+    voice_msg_sample_rate = Config.RECEIVE_SAMPLE_RATE  # 24kHz
+
     try:
         stream = audio_handler.audio.open(
             format=8,  # paInt16
             channels=Config.CHANNELS,
-            rate=Config.INPUT_SAMPLE_RATE,
+            rate=voice_msg_sample_rate,
             input=True,
             input_device_index=Config.INPUT_DEVICE_INDEX,
             frames_per_buffer=Config.CHUNK_SIZE
@@ -242,7 +245,7 @@ def record_voice_message() -> Optional[io.BytesIO]:
     with wave.open(wav_buffer, 'wb') as wf:
         wf.setnchannels(Config.CHANNELS)
         wf.setsampwidth(2)
-        wf.setframerate(Config.INPUT_SAMPLE_RATE)
+        wf.setframerate(voice_msg_sample_rate)
         wf.writeframes(b''.join(frames))
 
     wav_buffer.seek(0)
@@ -295,6 +298,10 @@ async def audio_input_loop(client: GeminiLiveClient, audio_handler: AudioHandler
                             None, lambda: send_recorded_voice_message(client)
                         )
                         is_recording = False
+                        if success:
+                            logger.info("音声メッセージ送信完了")
+                        else:
+                            logger.info("音声メッセージ送信失敗")
                         client.needs_session_reset = True
                         continue
                     else:
