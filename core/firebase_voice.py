@@ -188,6 +188,12 @@ class FirebaseVoiceMessenger:
         db_url = f"{self.db_url}/messages/{message_id}/played.json"
         requests.put(db_url, json=True)
 
+    def update_message_text(self, message_id: str, text: str) -> bool:
+        """メッセージのテキストを更新"""
+        db_url = f"{self.db_url}/messages/{message_id}/text.json"
+        response = requests.put(db_url, json=text)
+        return response.status_code == 200
+
     def start_listening(self, poll_interval: float = 3.0) -> None:
         """新着メッセージの監視を開始"""
         self.running = True

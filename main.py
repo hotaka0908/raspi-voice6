@@ -147,6 +147,18 @@ def on_voice_message_received(message):
         if wav_data:
             audio_handler.play_audio_buffer(wav_data)
 
+            # テキストがない場合はSTTでテキスト化してFirebaseに保存
+            if not message.get("text"):
+                try:
+                    transcribed_text = transcribe_audio_with_gemini(wav_data)
+                    if transcribed_text:
+                        message_id = message.get("id")
+                        if message_id:
+                            messenger.update_message_text(message_id, transcribed_text)
+                            logger.info(f"受信メッセージをテキスト化: {transcribed_text[:50]}...")
+                except Exception as e:
+                    logger.warning(f"テキスト化エラー: {e}")
+
         messenger.mark_as_played(message.get("id"))
 
     except Exception as e:
