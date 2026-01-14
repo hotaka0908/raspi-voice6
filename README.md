@@ -67,9 +67,19 @@ Google Cloud Consoleでプロジェクトを作成し、OAuth認証情報を取�
 
 Voice Messenger機能を使用する場合:
 
-```
-~/.ai-necklace/firebase-service-account.json
-```
+1. Firebase Consoleでプロジェクトを作成
+2. Realtime DatabaseとStorageを有効化
+3. サービスアカウントキーを取得して配置:
+   ```
+   ~/.ai-necklace/firebase-service-account.json
+   ```
+
+4. Voice Messenger Webアプリの設定:
+   ```bash
+   cd docs
+   cp firebase-config.example.js firebase-config.js
+   # firebase-config.js を編集してFirebaseプロジェクトの設定を入力
+   ```
 
 ## 実行
 
